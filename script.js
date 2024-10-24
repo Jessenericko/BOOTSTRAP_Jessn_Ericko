@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Penanganan form kontak
 document.getElementById('contactForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     const toastEl = document.getElementById('formToast');
@@ -30,7 +31,8 @@ document.getElementById('contactForm')?.addEventListener('submit', function (e) 
     this.reset();
 });
 
-document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+// Penanganan form langganan
+document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
     e.preventDefault(); // Mencegah perilaku default form
 
     // Tampilkan pesan umpan balik
@@ -42,4 +44,27 @@ document.getElementById('subscribeForm').addEventListener('submit', function(e) 
         alertMessage.classList.add('d-none'); // Menyembunyikan pesan
         this.reset(); // Mereset form
     }, 2000);
+});
+
+// Penanganan modal pembayaran
+document.getElementById('paymentModal').addEventListener('show.bs.modal', (event) => {
+    const button = event.relatedTarget; // Button that triggered the modal
+    const membershipType = button.getAttribute('data-membership');
+    const membershipPrice = button.getAttribute('data-price');
+
+    // Update the modal's content
+    const membershipTypeInput = document.getElementById('membershipType');
+    const membershipPriceInput = document.getElementById('membershipPrice');
+
+    membershipTypeInput.value = membershipType;
+    membershipPriceInput.value = membershipPrice;
+});
+
+// Penanganan pengiriman form pembayaran
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Payment submitted successfully!');
+    this.reset(); // Reset form after submission
+    const modal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+    modal.hide(); // Hide modal after submission
 });
